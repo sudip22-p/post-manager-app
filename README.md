@@ -2,14 +2,6 @@
 
 A modern post manager built with **Next.js 15** using **App Router** and **Server Actions**. Easily create, view, and delete posts with responsive UI and real-time interactions.
 
----
-
-## 🔗 Live Demo
-
-[👉 View Demo](https://post-manager-app.vercel.app/)
-
----
-
 ## ✨ Features
 
 - 📄 View all posts in a responsive grid
