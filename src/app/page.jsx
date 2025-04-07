@@ -64,7 +64,7 @@ export default function Home() {
                 Explore Posts
               </Link>
               <Link
-                href="/posts/new"
+                href="/posts"
                 className="bg-blue-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-400 transition-colors text-center"
               >
                 Create New Post
