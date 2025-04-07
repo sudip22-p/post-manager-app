@@ -6,14 +6,27 @@ import PostCard from "@/components/PostCard";
 import Button from "@/components/Button";
 import { getPosts } from "@/lib/actions/post.actions";
 import Loading from "@/components/Loading";
+import { useRouter } from "next/navigation";
 
 export default function PostsPage() {
+  const router = useRouter();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     loadPosts();
+  }, []);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      loadPosts();
+    };
+
+    window.addEventListener("focus", handleRouteChange);
+    return () => {
+      window.removeEventListener("focus", handleRouteChange);
+    };
   }, []);
 
   async function loadPosts() {
@@ -27,6 +40,7 @@ export default function PostsPage() {
         setError(result.error);
       }
     } catch (error) {
+      console.error("Error loading posts:", error);
       setError("Failed to load posts");
     } finally {
       setLoading(false);

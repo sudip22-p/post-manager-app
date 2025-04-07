@@ -6,7 +6,7 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import Popup from "@/components/Popup";
 import Loading from "@/components/Loading";
-import { deletePost } from "@/lib/actions/post.actions";
+import { deletePost, getPosts } from "@/lib/actions/post.actions";
 
 export default function PostPage({ params }) {
   const router = useRouter();
@@ -17,12 +17,20 @@ export default function PostPage({ params }) {
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    fetchPost();
-  }, [postId]);
-
   const fetchPost = async () => {
     try {
+      // First try to get from our local posts
+      const result = await getPosts();
+      if (result.success) {
+        const localPost = result.data.find((p) => p.id === Number(postId));
+        if (localPost) {
+          setPost(localPost);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // If not found in local posts, try JSONPlaceholder
       const response = await fetch(
         `https://jsonplaceholder.typicode.com/posts/${postId}`
       );
@@ -31,9 +39,14 @@ export default function PostPage({ params }) {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching post:", error);
+      setError("Failed to fetch post");
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchPost();
+  }, [postId]);
 
   const handleDelete = async () => {
     try {
