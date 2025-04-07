@@ -6,7 +6,7 @@ let nextId = 1;
 
 // Initialize posts if empty
 async function initializePosts() {
-  if (posts.length === 0) {
+  if (posts.length < 3) {
     const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
       cache: "no-store",
     });
