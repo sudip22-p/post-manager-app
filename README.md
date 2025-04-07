@@ -6,7 +6,7 @@ A modern post manager built with **Next.js 15** using **App Router** and **Serve
 
 ## 🔗 Live Demo
 
-[👉 https://post-manager-app.vercel.app/](#)
+[👉 View Demo](https://post-manager-app.vercel.app/)
 
 ---
 
