@@ -16,6 +16,7 @@ export default function PostPage({ params }) {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState("");
+  const [postAvailable, setPostAvailable] = useState(false);
 
   const fetchPost = async () => {
     try {
@@ -26,6 +27,8 @@ export default function PostPage({ params }) {
         if (localPost) {
           setPost(localPost);
           setLoading(false);
+          setPostAvailable(true);
+          // console.log("Post found in local data");
           return;
         }
       }
@@ -37,10 +40,14 @@ export default function PostPage({ params }) {
       const data = await response.json();
       setPost(data);
       setLoading(false);
+      setPostAvailable(true);
+      // console.log("Post found in JSONPlaceholder");
     } catch (error) {
       console.error("Error fetching post:", error);
       setError("Failed to fetch post");
       setLoading(false);
+      setPostAvailable(false);
+      // console.log("Post not found in JSONPlaceholder");
     }
   };
 
@@ -74,7 +81,13 @@ export default function PostPage({ params }) {
     return <Loading />;
   }
 
-  if (!post) {
+  if (
+    !postAvailable ||
+    post === null ||
+    post === undefined ||
+    post.title === undefined ||
+    post.body === undefined
+  ) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">

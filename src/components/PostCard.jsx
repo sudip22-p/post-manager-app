@@ -74,7 +74,7 @@ export default function PostCard({ post, onDelete }) {
               size="sm"
               onClick={() => setShowDeletePopup(true)}
               disabled={deleting}
-              className="opacity-0 group-hover:opacity-100 transition-opacity"
+              className="opacity-100 group-hover:opacity-100 transition-opacity"
             >
               {deleting ? (
                 <>
