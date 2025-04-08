@@ -10,7 +10,10 @@ import { deletePost, getPosts } from "@/lib/actions/post.actions";
 
 export default function PostPage({ params }) {
   const router = useRouter();
-  const postId = use(params).id;
+  // const postId = use(params).id;
+  // const postId = params.id;
+  const { id: postId } = use(params);
+
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
@@ -22,8 +25,12 @@ export default function PostPage({ params }) {
     try {
       // First try to get from our local posts
       const result = await getPosts();
+      console.log("All Posts:", result.data);
       if (result.success) {
-        const localPost = result.data.find((p) => p.id === Number(postId));
+        // const localPost = result.data.find((p) => p.id === Number(postId));
+        const localPost = result.data.find(
+          (p) => String(p.id) === String(postId)
+        );
         if (localPost) {
           setPost(localPost);
           setLoading(false);
